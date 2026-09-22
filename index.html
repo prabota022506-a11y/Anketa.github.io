@@ -1,0 +1,477 @@
+<title>Подборка · Калининград</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --ink:#0B0C0A;
+    --ink-2:#141612;
+    --line:#2A2D25;
+    --line-2:#3A3E33;
+    --text:#F3F4EE;
+    --muted:#9A9E90;
+    --lime:#D4FF00;
+    --lime-ink:#0B0C0A;
+    --warn:#FF6B4A;
+    --display:"Unbounded","Arial Black",system-ui,sans-serif;
+    --body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+    color-scheme:dark;
+  }
+  html,body{background:var(--ink)}
+  body{
+    color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;
+    padding-inline:16px;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(212,255,0,.07), transparent 60%),
+      var(--ink);
+  }
+  body::before{ /* мелкая текстура, как в логотипе */
+    content:"";position:fixed;inset:0;pointer-events:none;opacity:.06;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding-block:28px 120px}
+
+  header.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+  .brand{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .brand b{color:var(--lime);font-weight:800}
+  .brand small{display:block;font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.28em;color:var(--muted);margin-top:2px}
+  .time{font-family:var(--mono);font-size:12px;color:var(--lime);border:1px solid var(--line-2);border-radius:99px;padding:6px 12px;white-space:nowrap}
+
+  h1{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(30px,7.2vw,56px);line-height:.98;letter-spacing:-.01em;margin:0 0 18px;text-wrap:balance}
+  h1 em{font-style:normal;color:var(--lime)}
+  .lead{color:#C9CCC0;max-width:58ch;margin:0 0 8px;font-size:17px}
+  .sig{font-family:var(--mono);font-size:12px;color:var(--muted);margin:0 0 36px}
+
+  .progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(11,12,10,.92);backdrop-filter:blur(8px);margin-inline:-16px;padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+  .bar{flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--lime);transition:width .3s ease}
+  .count{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  form{display:flex;flex-direction:column}
+  fieldset{border:0;margin:0;padding:30px 0;border-bottom:1px solid var(--line);min-width:0}
+  legend{padding:0;display:block;width:100%}
+  .q{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:baseline;margin-bottom:16px}
+  .num{font-family:var(--mono);font-size:12px;color:var(--lime);min-width:2ch}
+  .qt{font-family:var(--body);font-weight:600;font-size:19px;line-height:1.3;text-wrap:balance}
+  .hint{grid-column:2;font-size:13px;color:var(--muted)}
+  .group-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px;padding-left:calc(2ch + 14px)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding-left:calc(2ch + 14px)}
+  .chip{position:relative}
+  .chip input{position:absolute;opacity:0;width:1px;height:1px}
+  .chip span{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border:1px solid var(--line-2);border-radius:999px;font-size:15px;line-height:1.2;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,color .15s}
+  .chip span:hover{border-color:#6B7058}
+  .chip input:checked + span{background:var(--lime);border-color:var(--lime);color:var(--lime-ink);font-weight:600}
+  .chip input:focus-visible + span{outline:2px solid var(--lime);outline-offset:3px}
+  .chip input:disabled + span{opacity:.35;cursor:not-allowed}
+
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-left:calc(2ch + 14px)}
+  .fields.one{grid-template-columns:1fr}
+  input[type=text],input[type=tel],textarea{
+    width:100%;box-sizing:border-box;background:var(--ink-2);color:var(--text);
+    border:1px solid var(--line-2);border-radius:12px;padding:13px 14px;font:inherit;font-size:16px
+  }
+  input::placeholder,textarea::placeholder{color:#6D7163}
+  input:focus,textarea:focus{outline:none;border-color:var(--lime)}
+  textarea{resize:vertical;min-height:84px}
+  .other{margin-top:10px;padding-left:calc(2ch + 14px)}
+  .err{border-color:var(--warn)!important}
+  .errmsg{color:var(--warn);font-size:13px;padding-left:calc(2ch + 14px);margin-top:8px}
+
+  .send{padding-top:36px;display:flex;flex-direction:column;gap:14px}
+  .btn{appearance:none;border:0;cursor:pointer;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.02em;font-size:15px;border-radius:14px;padding:18px 22px;text-align:center;text-decoration:none;display:block}
+  .btn.primary{background:var(--lime);color:var(--lime-ink)}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line-2)}
+  .btn:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+  .fine{font-size:13px;color:var(--muted);margin:0}
+
+  .result{border:1px solid var(--lime);border-radius:18px;padding:22px;margin-top:10px;background:var(--ink-2)}
+  .result h2{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:20px;margin:0 0 6px}
+  .result p{margin:0 0 14px;color:#C9CCC0}
+  .result pre{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12.5px;line-height:1.6;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 14px;max-height:340px;overflow:auto;user-select:all}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row .btn{flex:1 1 220px}
+  .toast{font-family:var(--mono);font-size:12px;color:var(--lime);min-height:1.2em;margin:10px 0 0}
+
+  .visit{margin-top:48px;border:1px solid var(--line-2);border-radius:18px;padding:22px;background:linear-gradient(135deg,rgba(212,255,0,.08),transparent 55%),var(--ink-2)}
+  .visit-tag{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:16px;color:var(--lime);margin-bottom:8px}
+  .visit p{margin:0;font-size:17px;line-height:1.5;color:var(--text);max-width:60ch}
+  footer{margin-top:28px;font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+  footer a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line-2)}
+
+  @media (max-width:520px){
+    .fields{grid-template-columns:1fr}
+    .chips,.fields,.other,.group-label,.errmsg{padding-left:0}
+    .q{grid-template-columns:1fr}
+    .hint{grid-column:1}
+    .chip span{font-size:14px;padding:9px 13px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">Profit<b>.</b>house<small>BROKER</small></div>
+    <div class="time">≈ 2–3 минуты</div>
+  </header>
+
+  <h1>Подборка<br>в <em>Калининграде</em><br>под вас</h1>
+  <p class="lead">Отметьте варианты, которые про вас, — писать почти ничего не нужно. По ответам я соберу короткую презентацию с объектами, которые действительно стоит смотреть.</p>
+  <p class="sig">Алёна Андреева · брокер</p>
+
+  <div class="progress" aria-hidden="true">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="count" id="count">0 / 14</div>
+  </div>
+
+  <form id="f" novalidate>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">01</span><span class="qt">Как к вам обращаться и куда прислать подборку?</span></legend>
+      <div class="fields">
+        <input type="text" id="name" name="name" placeholder="Имя" autocomplete="given-name">
+        <input type="text" id="contact" name="contact" placeholder="Telegram или телефон" autocomplete="tel">
+      </div>
+      <div class="errmsg" id="err-contact" hidden>Оставьте имя и контакт — иначе мне некуда отправить подборку.</div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">02</span><span class="qt">Для чего покупаете?</span><span class="hint">Можно несколько</span></legend>
+      <div class="chips" data-name="Цель">
+        <label class="chip"><input type="checkbox" id="goal-1" value="Переезд, жить постоянно"><span>Переезд, жить постоянно</span></label>
+        <label class="chip"><input type="checkbox" id="goal-2" value="Второй дом у моря"><span>Второй дом у моря</span></label>
+        <label class="chip"><input type="checkbox" id="goal-3" value="Инвестиция под сдачу"><span>Инвестиция под сдачу</span></label>
+        <label class="chip"><input type="checkbox" id="goal-4" value="Сохранить капитал / перепродать"><span>Сохранить капитал / перепродать</span></label>
+        <label class="chip"><input type="checkbox" id="goal-5" value="Для детей или родителей"><span>Для детей или родителей</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">03</span><span class="qt">Какой формат смотрите?</span><span class="hint">Можно несколько</span></legend>
+      <div class="chips" data-name="Формат">
+        <label class="chip"><input type="checkbox" id="type-1" value="Квартира в новостройке"><span>Квартира в новостройке</span></label>
+        <label class="chip"><input type="checkbox" id="type-2" value="Готовая квартира (вторичка)"><span>Готовая квартира (вторичка)</span></label>
+        <label class="chip"><input type="checkbox" id="type-3" value="Апартаменты у моря"><span>Апартаменты у моря</span></label>
+        <label class="chip"><input type="checkbox" id="type-4" value="Дом / таунхаус"><span>Дом / таунхаус</span></label>
+        <label class="chip"><input type="checkbox" id="type-5" value="Коммерческая"><span>Коммерческая</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">04</span><span class="qt">Где хотелось бы?</span><span class="hint">Можно несколько</span></legend>
+      <div class="chips" data-name="Локация">
+        <label class="chip"><input type="checkbox" id="loc-1" value="Калининград, центр"><span>Калининград, центр</span></label>
+        <label class="chip"><input type="checkbox" id="loc-2" value="Калининград, тихие районы"><span>Калининград, тихие районы</span></label>
+        <label class="chip"><input type="checkbox" id="loc-3" value="Светлогорск"><span>Светлогорск</span></label>
+        <label class="chip"><input type="checkbox" id="loc-4" value="Зеленоградск"><span>Зеленоградск</span></label>
+        <label class="chip"><input type="checkbox" id="loc-5" value="Пионерский / Янтарный"><span>Пионерский / Янтарный</span></label>
+        <label class="chip"><input type="checkbox" id="loc-6" value="Пригород, свой дом"><span>Пригород, свой дом</span></label>
+        <label class="chip"><input type="checkbox" id="loc-7" value="Не знаю — подскажите"><span>Не знаю — подскажите</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">05</span><span class="qt">Какая площадь и сколько спален?</span></legend>
+      <div class="group-label">Площадь</div>
+      <div class="chips" data-name="Площадь" data-single>
+        <label class="chip"><input type="radio" name="area" id="area-1" value="до 50 м²"><span>до 50 м²</span></label>
+        <label class="chip"><input type="radio" name="area" id="area-2" value="50–80 м²"><span>50–80 м²</span></label>
+        <label class="chip"><input type="radio" name="area" id="area-3" value="80–120 м²"><span>80–120 м²</span></label>
+        <label class="chip"><input type="radio" name="area" id="area-4" value="120–200 м²"><span>120–200 м²</span></label>
+        <label class="chip"><input type="radio" name="area" id="area-5" value="от 200 м²"><span>от 200 м²</span></label>
+      </div>
+      <div class="group-label">Спален</div>
+      <div class="chips" data-name="Спален" data-single>
+        <label class="chip"><input type="radio" name="beds" id="beds-0" value="студия"><span>Студия</span></label>
+        <label class="chip"><input type="radio" name="beds" id="beds-1" value="1"><span>1</span></label>
+        <label class="chip"><input type="radio" name="beds" id="beds-2" value="2"><span>2</span></label>
+        <label class="chip"><input type="radio" name="beds" id="beds-3" value="3"><span>3</span></label>
+        <label class="chip"><input type="radio" name="beds" id="beds-4" value="4 и больше"><span>4+</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">06</span><span class="qt">Кто будет жить? Какой у вас сценарий?</span><span class="hint">Можно несколько</span></legend>
+      <div class="chips" data-name="Кто живёт">
+        <label class="chip"><input type="checkbox" id="life-1" value="Один / одна"><span>Один / одна</span></label>
+        <label class="chip"><input type="checkbox" id="life-2" value="Пара"><span>Пара</span></label>
+        <label class="chip"><input type="checkbox" id="life-3" value="Семья с детьми"><span>Семья с детьми</span></label>
+        <label class="chip"><input type="checkbox" id="life-4" value="Со старшими родителями"><span>Со старшими родителями</span></label>
+        <label class="chip"><input type="checkbox" id="life-5" value="Есть собака / кошка"><span>Есть собака / кошка</span></label>
+        <label class="chip"><input type="checkbox" id="life-6" value="Работаю из дома, нужен кабинет"><span>Работаю из дома, нужен кабинет</span></label>
+        <label class="chip"><input type="checkbox" id="life-7" value="Буду приезжать наездами"><span>Буду приезжать наездами</span></label>
+        <label class="chip"><input type="checkbox" id="life-8" value="Жить не буду, сдаю"><span>Жить не буду, сдаю</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">07</span><span class="qt">Бюджет — в какой вилке смотрите?</span></legend>
+      <div class="chips" data-name="Бюджет" data-single>
+        <label class="chip"><input type="radio" name="budget" id="bud-1" value="до 10 млн ₽"><span>до 10 млн ₽</span></label>
+        <label class="chip"><input type="radio" name="budget" id="bud-2" value="10–15 млн ₽"><span>10–15 млн</span></label>
+        <label class="chip"><input type="radio" name="budget" id="bud-3" value="15–25 млн ₽"><span>15–25 млн</span></label>
+        <label class="chip"><input type="radio" name="budget" id="bud-4" value="25–40 млн ₽"><span>25–40 млн</span></label>
+        <label class="chip"><input type="radio" name="budget" id="bud-5" value="40–70 млн ₽"><span>40–70 млн</span></label>
+        <label class="chip"><input type="radio" name="budget" id="bud-6" value="от 70 млн ₽"><span>от 70 млн</span></label>
+      </div>
+      <div class="group-label">Как планируете оплату</div>
+      <div class="chips" data-name="Оплата">
+        <label class="chip"><input type="checkbox" id="pay-1" value="Свои средства"><span>Свои средства</span></label>
+        <label class="chip"><input type="checkbox" id="pay-2" value="Ипотека"><span>Ипотека</span></label>
+        <label class="chip"><input type="checkbox" id="pay-3" value="Рассрочка от застройщика"><span>Рассрочка</span></label>
+        <label class="chip"><input type="checkbox" id="pay-4" value="Через продажу своей недвижимости"><span>Продаю свою недвижимость</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">08</span><span class="qt">Что решит выбор?</span><span class="hint">Выберите до трёх — самое важное</span></legend>
+      <div class="chips" data-name="Решающие факторы" data-max="3">
+        <label class="chip"><input type="checkbox" id="key-1" value="Море рядом / вид на море"><span>Море рядом / вид на море</span></label>
+        <label class="chip"><input type="checkbox" id="key-2" value="Тишина и приватность"><span>Тишина и приватность</span></label>
+        <label class="chip"><input type="checkbox" id="key-3" value="Статус дома, архитектура"><span>Статус дома, архитектура</span></label>
+        <label class="chip"><input type="checkbox" id="key-4" value="Въехать сразу, с ремонтом"><span>Въехать сразу, с ремонтом</span></label>
+        <label class="chip"><input type="checkbox" id="key-5" value="Планировка, свет, потолки"><span>Планировка, свет, потолки</span></label>
+        <label class="chip"><input type="checkbox" id="key-6" value="Доходность и ликвидность"><span>Доходность и ликвидность</span></label>
+        <label class="chip"><input type="checkbox" id="key-7" value="Парк, зелень, экология"><span>Парк, зелень, экология</span></label>
+        <label class="chip"><input type="checkbox" id="key-8" value="Надёжный застройщик"><span>Надёжный застройщик</span></label>
+        <label class="chip"><input type="checkbox" id="key-9" value="Цена ниже рынка"><span>Цена ниже рынка</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">09</span><span class="qt">Что обязательно должно быть рядом?</span><span class="hint">Можно несколько</span></legend>
+      <div class="chips" data-name="Инфраструктура">
+        <label class="chip"><input type="checkbox" id="inf-1" value="Школа / детский сад"><span>Школа / сад</span></label>
+        <label class="chip"><input type="checkbox" id="inf-2" value="Набережная, место для прогулок"><span>Набережная, прогулки</span></label>
+        <label class="chip"><input type="checkbox" id="inf-3" value="Фитнес, спорт"><span>Фитнес, спорт</span></label>
+        <label class="chip"><input type="checkbox" id="inf-4" value="Рестораны, кофейни"><span>Рестораны, кофейни</span></label>
+        <label class="chip"><input type="checkbox" id="inf-5" value="Хорошая медицина"><span>Хорошая медицина</span></label>
+        <label class="chip"><input type="checkbox" id="inf-6" value="Паркинг / машиноместо"><span>Паркинг</span></label>
+        <label class="chip"><input type="checkbox" id="inf-7" value="Закрытая территория, охрана"><span>Закрытая территория</span></label>
+        <label class="chip"><input type="checkbox" id="inf-8" value="Близко к аэропорту"><span>Близко к аэропорту</span></label>
+        <label class="chip"><input type="checkbox" id="inf-9" value="Не принципиально"><span>Не принципиально</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">10</span><span class="qt">Что точно не рассматриваете?</span><span class="hint">Чтобы я не тратила ваше время</span></legend>
+      <div class="chips" data-name="Не рассматривает">
+        <label class="chip"><input type="checkbox" id="no-1" value="Первый и последний этаж"><span>Первый / последний этаж</span></label>
+        <label class="chip"><input type="checkbox" id="no-2" value="Стройка дольше года"><span>Стройка дольше года</span></label>
+        <label class="chip"><input type="checkbox" id="no-3" value="Без ремонта"><span>Без ремонта</span></label>
+        <label class="chip"><input type="checkbox" id="no-4" value="Старый фонд"><span>Старый фонд</span></label>
+        <label class="chip"><input type="checkbox" id="no-5" value="Панельные дома"><span>Панель</span></label>
+        <label class="chip"><input type="checkbox" id="no-6" value="Шумные улицы, трасса"><span>Шумные улицы</span></label>
+        <label class="chip"><input type="checkbox" id="no-7" value="Высотки 15+ этажей"><span>Высотки</span></label>
+        <label class="chip"><input type="checkbox" id="no-8" value="Окна во двор-колодец / на север"><span>Тёмные окна</span></label>
+      </div>
+      <div class="other"><input type="text" id="no-other" placeholder="Своё — если есть (необязательно)"></div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">11</span><span class="qt">Насколько хорошо знаете Калининград?</span></legend>
+      <div class="chips" data-name="Знание города" data-single>
+        <label class="chip"><input type="radio" name="city" id="city-1" value="Живу здесь"><span>Живу здесь</span></label>
+        <label class="chip"><input type="radio" name="city" id="city-2" value="Бывал(а) много раз"><span>Бывал(а) много раз</span></label>
+        <label class="chip"><input type="radio" name="city" id="city-3" value="Был(а) пару раз"><span>Был(а) пару раз</span></label>
+        <label class="chip"><input type="radio" name="city" id="city-4" value="Ни разу не был(а)"><span>Ни разу</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">12</span><span class="qt">Кто принимает решение о покупке?</span></legend>
+      <div class="chips" data-name="Решение принимает" data-single>
+        <label class="chip"><input type="radio" name="dm" id="dm-1" value="Я сам(а)"><span>Я сам(а)</span></label>
+        <label class="chip"><input type="radio" name="dm" id="dm-2" value="Вместе с супругом(ой)"><span>Вместе с супругом(ой)</span></label>
+        <label class="chip"><input type="radio" name="dm" id="dm-3" value="Вся семья"><span>Вся семья</span></label>
+        <label class="chip"><input type="radio" name="dm" id="dm-4" value="С партнёром / инвестором"><span>С партнёром / инвестором</span></label>
+        <label class="chip"><input type="radio" name="dm" id="dm-5" value="Я подбираю, решает другой человек"><span>Я подбираю, решает другой</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">13</span><span class="qt">Когда готовы принять решение?</span></legend>
+      <div class="chips" data-name="Сроки" data-single>
+        <label class="chip"><input type="radio" name="when" id="when-1" value="В ближайшие 2 недели"><span>В ближайшие 2 недели</span></label>
+        <label class="chip"><input type="radio" name="when" id="when-2" value="В течение месяца"><span>В течение месяца</span></label>
+        <label class="chip"><input type="radio" name="when" id="when-3" value="1–3 месяца"><span>1–3 месяца</span></label>
+        <label class="chip"><input type="radio" name="when" id="when-4" value="3–6 месяцев"><span>3–6 месяцев</span></label>
+        <label class="chip"><input type="radio" name="when" id="when-5" value="Пока присматриваюсь"><span>Пока присматриваюсь</span></label>
+      </div>
+      <div class="group-label">Готовы прилететь на просмотры?</div>
+      <div class="chips" data-name="Просмотры" data-single>
+        <label class="chip"><input type="radio" name="visit" id="visit-1" value="Да, приеду"><span>Да, приеду</span></label>
+        <label class="chip"><input type="radio" name="visit" id="visit-2" value="Сначала онлайн-показ"><span>Сначала онлайн-показ</span></label>
+        <label class="chip"><input type="radio" name="visit" id="visit-3" value="Куплю дистанционно"><span>Куплю дистанционно</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset data-q>
+      <legend class="q"><span class="num">14</span><span class="qt">Что ещё мне важно знать?</span><span class="hint">Необязательно. Одна-две фразы: мечта, опасение, особое пожелание</span></legend>
+      <div class="fields one"><textarea id="extra" placeholder="Например: хочу слышать море по утрам, но без туристов под окнами"></textarea></div>
+    </fieldset>
+
+    <div class="send">
+      <button type="submit" class="btn primary" id="submitBtn">Отправить анкету в Telegram</button>
+      <p class="fine">Откроется чат со мной, ваши ответы уже будут вписаны — останется нажать «Отправить».</p>
+    </div>
+
+    <div class="result" id="ok" hidden>
+      <h2>Последний шаг</h2>
+      <p>В Telegram открылся чат со мной, ответы уже вписаны в сообщение — нажмите <b>«Отправить»</b> ➤. Подборку пришлю в течение суток.</p>
+      <p style="font-size:14px;color:var(--muted)">Telegram не открылся? Нажмите кнопку ниже.</p>
+      <pre id="out" hidden></pre>
+      <div class="row">
+        <a class="btn primary" id="tg" href="https://t.me/chu_alena" target="_blank" rel="noopener">Открыть Telegram ещё раз</a>
+      </div>
+      <p class="toast" id="toast" aria-live="polite"></p>
+    </div>
+  </form>
+
+  <aside class="visit">
+    <div class="visit-tag">Приезжайте смотреть</div>
+    <p>Если вы захотите приехать посмотреть недвижимость — я закажу трансфер из аэропорта, устрою вам экскурсию по объектам, а при покупке оплачу билеты и проживание в гостинице.</p>
+  </aside>
+
+  <footer>
+    <span>Алёна Андреева · брокер</span>
+    <a href="https://t.me/chu_alena" target="_blank" rel="noopener">Telegram @chu_alena</a>
+    <a href="tel:+79669859966">+7 (966) 985-99-66</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const form = document.getElementById('f');
+  const qs = [...form.querySelectorAll('fieldset[data-q]')];
+  const bar = document.getElementById('bar');
+  const count = document.getElementById('count');
+
+  function answered(fs){
+    if (fs.querySelector('input:checked')) return true;
+    return [...fs.querySelectorAll('input[type=text],textarea')].some(i => i.value.trim());
+  }
+  function progress(){
+    const n = qs.filter(answered).length;
+    bar.style.width = (n / qs.length * 100) + '%';
+    count.textContent = n + ' / ' + qs.length;
+  }
+
+  // «до трёх» в решающих факторах
+  form.querySelectorAll('[data-max]').forEach(g => {
+    const max = +g.dataset.max;
+    g.addEventListener('change', () => {
+      const boxes = [...g.querySelectorAll('input')];
+      const on = boxes.filter(b => b.checked).length;
+      boxes.forEach(b => { if (!b.checked) b.disabled = on >= max; });
+    });
+  });
+
+  form.addEventListener('input', progress);
+  form.addEventListener('change', progress);
+
+  function pick(g){
+    return [...g.querySelectorAll('input:checked')].map(i => i.value);
+  }
+
+  function build(){
+    const v = id => document.getElementById(id).value.trim();
+    const lines = ['ЗАЯВКА НА ПОДБОРКУ · КАЛИНИНГРАД', ''];
+    lines.push('Имя: ' + v('name'));
+    lines.push('Контакт: ' + v('contact'));
+    form.querySelectorAll('.chips[data-name]').forEach(g => {
+      let vals = pick(g);
+      if (g.dataset.name === 'Не рассматривает' && v('no-other')) vals.push(v('no-other'));
+      if (vals.length) lines.push(g.dataset.name + ': ' + vals.join(', '));
+    });
+    if (v('extra')) lines.push('', 'Ещё важно: ' + v('extra'));
+    return lines.join('\n');
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('name'), contact = document.getElementById('contact');
+    const err = document.getElementById('err-contact');
+    const bad = !name.value.trim() || !contact.value.trim();
+    name.classList.toggle('err', !name.value.trim());
+    contact.classList.toggle('err', !contact.value.trim());
+    err.hidden = !bad;
+    if (bad){ name.closest('fieldset').scrollIntoView({behavior:'smooth', block:'center'}); return; }
+    send();
+  });
+
+  // Отправка на почту через FormSubmit
+  const MAIL_ENDPOINT = 'https://formsubmit.co/ajax/a9818517102@gmail.com';
+  const btn = document.getElementById('submitBtn');
+
+  function payload(){
+    const v = id => document.getElementById(id).value.trim();
+    const p = {
+      _subject: 'Анкета на подборку · Калининград · ' + v('name'),
+      _template: 'table',
+      _captcha: 'false',
+      'Имя': v('name'),
+      'Контакт': v('contact'),
+    };
+    form.querySelectorAll('.chips[data-name]').forEach(g => {
+      const vals = pick(g);
+      if (g.dataset.name === 'Не рассматривает' && v('no-other')) vals.push(v('no-other'));
+      p[g.dataset.name] = vals.length ? vals.join(', ') : '—';
+    });
+    p['Ещё важно'] = v('extra') || '—';
+    p['Текст для трекера'] = build();
+    return p;
+  }
+
+  const TG_USER = 'chu_alena';
+
+  function send(){
+    const text = build();
+    document.getElementById('out').textContent = text;
+    // Telegram: открываем чат с Алёной, ответы уже вписаны в сообщение
+    const tgUrl = 'https://t.me/' + TG_USER + '?text=' + encodeURIComponent(text);
+    document.getElementById('tg').href = tgUrl;
+    const win = window.open(tgUrl, '_blank');
+    if (!win) { try { window.location.href = tgUrl; } catch(_){} }
+
+    // Запасная копия на почту — тихо, в фоне
+    try{
+      fetch(MAIL_ENDPOINT, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(payload()),
+        keepalive: true
+      }).catch(() => {});
+    }catch(_){}
+
+    const ok = document.getElementById('ok');
+    ok.hidden = false;
+    form.querySelectorAll('fieldset, .send').forEach(el => el.hidden = true);
+    ok.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  const toast = document.getElementById('toast');
+  function copy(){
+    const text = document.getElementById('out').textContent;
+    const done = () => { toast.textContent = 'Скопировано — вставьте в чат'; };
+    const fallback = () => {
+      try{
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        const ok = document.execCommand('copy'); ta.remove();
+        toast.textContent = ok ? 'Скопировано — вставьте в чат' : 'Выделите текст выше и скопируйте вручную';
+      }catch(_){ toast.textContent = 'Выделите текст выше и скопируйте вручную'; }
+    };
+    try{
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    }catch(_){ fallback(); }
+  }
+  document.getElementById('tg').addEventListener('click', copy);
+
+  progress();
+})();
+</script>
